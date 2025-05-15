@@ -1,0 +1,11 @@
+Flask==3.1.0
+Flask-Cors==5.0.1
+Flask-Migrate==4.1.0
+Flask-SQLAlchemy==3.1.1
+cx_Oracle==8.3.0
+pyodbc==4.0.39
+alembic==1.15.2
+python-dotenv==1.1.0
+SQLAlchemy==2.0.40
+typing_extensions==4.13.0
+Werkzeug==3.1.3
