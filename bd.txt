@@ -1,0 +1,109 @@
+ORACLE
+
+-- Esquema para la BD Central en Oracle
+
+-- Tabla Clientes
+CREATE TABLE Clientes (
+    ClienteID NUMBER PRIMARY KEY,
+    Nombre VARCHAR2(100),
+    Apellido VARCHAR2(100)
+    -- Puedes agregar otros campos como dirección, teléfono, etc.
+);
+
+-- Tabla Asuntos
+CREATE TABLE Asuntos (
+    NumeroExpediente NUMBER PRIMARY KEY,
+    ClienteID NUMBER,
+    FechaInicio DATE,
+    FechaArchivo DATE,  -- Alternativa: FechaFinalizacion
+    Estado VARCHAR2(50),
+    CONSTRAINT FK_Asuntos_Clientes FOREIGN KEY (ClienteID)
+        REFERENCES Clientes (ClienteID)
+);
+
+-- Tabla Gabinetes
+CREATE TABLE Gabinetes (
+    GabineteID NUMBER PRIMARY KEY,
+    Nombre VARCHAR2(100),
+    Pais VARCHAR2(50)
+    -- Otros datos de contacto si es necesario
+);
+
+-- Tabla Abogados
+CREATE TABLE Abogados (
+    Pasaporte VARCHAR2(20) PRIMARY KEY,  -- Identificador único por pasaporte
+    Nombre VARCHAR2(100),
+    Especialidad VARCHAR2(100)
+    -- Puedes agregar campos adicionales, como email o teléfono
+);
+
+-- Tabla Audiencias
+CREATE TABLE Audiencias (
+    AudienciaID NUMBER PRIMARY KEY,
+    NumeroExpediente NUMBER,
+    FechaAudiencia DATE,
+    AbogadoPasaporte VARCHAR2(20),
+    Incidencias CLOB,  -- Texto extenso para describir incidencias
+    CONSTRAINT FK_Audiencias_Asuntos FOREIGN KEY (NumeroExpediente)
+        REFERENCES Asuntos (NumeroExpediente),
+    CONSTRAINT FK_Audiencias_Abogados FOREIGN KEY (AbogadoPasaporte)
+        REFERENCES Abogados (Pasaporte)
+);
+
+
+
+SQL SERVER
+
+-- Primero crea la base de datos (si aún no la tienes)
+CREATE DATABASE SociosLegal;
+GO
+USE SociosLegal;
+GO
+
+-- Tabla Clientes
+CREATE TABLE Clientes (
+    ClienteID INT PRIMARY KEY,
+    Nombre VARCHAR(100),
+    Apellido VARCHAR(100)
+    -- Agrega otros campos según sea necesario (p.ej. Dirección, Teléfono)
+);
+
+-- Tabla Asuntos
+CREATE TABLE Asuntos (
+    NumeroExpediente INT PRIMARY KEY,
+    ClienteID INT,
+    FechaInicio DATE,
+    FechaArchivo DATE,  -- Alternativamente, FechaFinalizacion
+    Estado VARCHAR(50),
+    CONSTRAINT FK_Asuntos_Clientes FOREIGN KEY (ClienteID)
+        REFERENCES Clientes(ClienteID)
+);
+
+-- Tabla Gabinetes
+CREATE TABLE Gabinetes (
+    GabineteID INT PRIMARY KEY,
+    Nombre VARCHAR(100),
+    Pais VARCHAR(50)
+    -- Otros campos opcionales
+);
+
+-- Tabla Abogados
+CREATE TABLE Abogados (
+    Pasaporte VARCHAR(20) PRIMARY KEY,  -- Identificador único por pasaporte
+    Nombre VARCHAR(100),
+    Especialidad VARCHAR(100)
+    -- Campos adicionales como Email o número de contacto pueden agregarse
+);
+
+-- Tabla Audiencias
+CREATE TABLE Audiencias (
+    AudienciaID INT PRIMARY KEY,
+    NumeroExpediente INT,
+    FechaAudiencia DATE,
+    AbogadoPasaporte VARCHAR(20),
+    Incidencias VARCHAR(MAX),   -- Usamos VARCHAR(MAX) para textos largos
+    CONSTRAINT FK_Audiencias_Asuntos FOREIGN KEY (NumeroExpediente)
+        REFERENCES Asuntos(NumeroExpediente),
+    CONSTRAINT FK_Audiencias_Abogados FOREIGN KEY (AbogadoPasaporte)
+        REFERENCES Abogados(Pasaporte)
+);
